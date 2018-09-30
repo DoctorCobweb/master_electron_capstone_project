@@ -28,8 +28,15 @@ exports.changeItem = (direction) => {
 
 // window function
 // delete item by index
-window.deleteItem = (idx) => {
+window.deleteItem = (idx = false) => {
   // console.log(idx)
+
+  // set i to active item if not passed as argument
+  // => this happens when 'delete item' is selected from
+  // the app menu or using a keyboard shortcut
+  if (idx === false) {
+    idx = $('.read-item.is-active').index() - 1
+  }
 
   // remove item from DOM
   $('.read-item').eq(idx).remove()
@@ -55,8 +62,21 @@ window.deleteItem = (idx) => {
   }
 }
 
+// open item in default browser
+window.openInBrowser = () => {
+
+  // only if items exists
+  if (!this.toReadItems.length ) return
+
+  // get selected item
+  let targetItem = $('.read-item.is-active')
+
+  // open in browser
+  require('electron').shell.openExternal(targetItem.data('url'))
+}
+
 // open item for reading
-exports.openItem = () => {
+window.openItem = () => {
 
   //only if items have been add
   if(!this.toReadItems.length) return
@@ -107,5 +127,5 @@ exports.addItem = (item) => {
   $('.read-item')
     .off('click, dblclick')
     .on('click', this.selectItem)
-    .on('dblclick', this.openItem)
+    .on('dblclick', window.openItem)
 }

@@ -7,6 +7,7 @@
 
 const { ipcRenderer } = require('electron')
 const items = require('./items')
+const menu = require('./menu')
 
 // navigate selected item with up/down keys
 $(document).keydown((event) => {
