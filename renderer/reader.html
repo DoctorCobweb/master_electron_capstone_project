@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="../node_modules/bulma/css/bulma.css">
+    <link rel="stylesheet" href="../node_modules/font-awesome/css/font-awesome.min.css">
+    <link rel="stylesheet" href="main.css">
+    <style media="screen">
+      html, body, webview {
+        height: 100%;
+      }
+    </style>
+  </head>
+  <body>
+    <section id="loader" class="hero is-fullheight has-text-centered">
+      <div class="hero-body">
+        <div class="container">
+
+          <div class="busy">
+            <h1 class="title">
+              <span class="icon is-large">
+                <i class="fa fa-circle-o-notch fa-spin fa-fw"></i>
+              </span>
+            </h1>
+          </div>
+
+          <div class="failed is-hidden">
+            <h1 class="title">failed to load</h1>
+            <h2 class="subtitle">please check your netwoek connectione</h2>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <a id="mark-read" class="is-hidden">
+      <div class="block">
+        <span class="tag is-large is-primary">
+          <span class="icon">
+            <i class="fa fa-check fa-inverse"></i>
+          </span>&nbsp; Read
+        </span>
+      </div>
+
+    </a>
+
+
+    <!--
+      about:blank is a default page that comes with most browsers,
+      and it's...a blank plage
+    -->
+    <webview src="about:blank"></webview>
+
+    <script>
+      $ = require('jQuery')
+
+      // query-string module
+      const queryString = require('query-string')
+
+      // parse query string which is in location.search
+      const queryParams = queryString.parse(location.search)
+
+      // get item index
+      let itemIndex = queryParams.itemIndex
+
+      // get query string 'url'
+      let url = decodeURIComponent(queryParams.url)
+      // console.log(queryParams.url)
+      
+
+      $('webview').one('dom-ready', (event) => {
+
+        // load item content url into webview
+        event.currentTarget.loadURL(url)
+      }).one('did-finish-load', () => {
+        // hide loader to reveal webview
+        $('#loader').fadeOut(100)
+        
+        // show mark read button
+        $('#mark-read').removeClass('is-hidden')
+
+        // handle failed load
+      }).on('did-fail-load', () => {
+        $('#mark-read').addClass('is-hidden')
+        $('#loader .busy').addClass('is-hidden')
+        $('#loader').fadeIn(100)
+        $('#loader .failed').removeClass('is-hidden')
+      })
+
+      // handle mark-read click (delete)
+      $('#mark-read').click(() => {
+
+        // parent window
+        window.opener.eval(`deleteItem(${itemIndex})`)
+        window.close()
+      })
+    </script>
+  </body>
+</html>

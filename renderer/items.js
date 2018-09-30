@@ -26,6 +26,35 @@ exports.changeItem = (direction) => {
   }
 }
 
+// window function
+// delete item by index
+window.deleteItem = (idx) => {
+  // console.log(idx)
+
+  // remove item from DOM
+  $('.read-item').eq(idx).remove()
+
+  // remove from toReadItems array
+  this.toReadItems = this.toReadItems.filter((item, index) => {
+    return index !== idx
+  })
+
+  // update storage
+  this.saveItems()
+
+  // select prev item or none if list is now empty
+  if (this.toReadItems.length) {
+    // if first item was deleted, select new first item in list, else previous item
+    let newIndex = (idx === 0) ? 0 : idx - 1
+
+    // assign active class to new index
+    $('.read-item').eq(newIndex).addClass('is-active')
+  } else {
+    // else show 'no-items' message
+    $('#no-items').show()
+  }
+}
+
 // open item for reading
 exports.openItem = () => {
 
@@ -36,10 +65,20 @@ exports.openItem = () => {
   let targetItem = $('.read-item.is-active')
 
   // get item's content url
-  let contentURL = targetItem.data('url')
+  let contentURL = encodeURIComponent(targetItem.data('url'))
 
-  console.log('opening item')
-  console.log(contentURL)
+  // get item index to pass to proxy window
+  let itemIndex = targetItem.index() - 1
+
+  // console.log('opening item')
+  // console.log(contentURL)
+
+  // reader window URL
+  let readerWinURL = `file://${__dirname}/reader.html?url=${contentURL}&itemIndex=${itemIndex}`
+  // console.log(`${__dirname}`) // in renderer folder
+
+  // open item in new proxy BrowserWindow
+  let readerWin = window.open(readerWinURL, targetItem.data('title'))
 }
 
 // add new item
@@ -49,7 +88,7 @@ exports.addItem = (item) => {
   $('#no-items').hide()
 
   // new item html, a bulma panel block
-  let itemHTML = `<a class="panel-block read-item" data-url="${item.url}">
+  let itemHTML = `<a class="panel-block read-item" data-url="${item.url}" data-title="${item.title}">
                     <figure class="image has-shadow is-64x64 thumb">
                       <img src="${item.screenshot}">
                     </figure>
