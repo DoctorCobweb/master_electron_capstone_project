@@ -1,6 +1,6 @@
 {
   "name": "read-it",
-  "version": "1.2.0",
+  "version": "1.3.0",
   "description": "master electron course project",
   "main": "main.js",
   "scripts": {
@@ -9,7 +9,8 @@
     "win": "electron-builder build -w",
     "build": "electron-builder build -mwl",
     "make-cert": "electron-builder create-self-signed-cert -p drder",
-    "publish": "electron-builder build -mwl -p onTagOrDraft"
+    "publish:all": "electron-builder build -mwl -p onTagOrDraft",
+    "publish:ml": "electron-builder build -ml -p onTagOrDraft"
   },
   "build": {
     "appId": "com.trosky.andre.read-it",
