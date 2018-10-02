@@ -1,6 +1,6 @@
 {
   "name": "read-it",
-  "version": "1.1.0",
+  "version": "1.0.0",
   "description": "master electron course project",
   "main": "main.js",
   "scripts": {
@@ -16,15 +16,18 @@
       "buildResources": "."
     },
     "mac": {
+      "publish": ["github"],
       "category": "public.app-category.productivity"
     },
     "win": {
+      "publish": ["github"],
       "certificateFile": "private/read-it.p12",
       "verifyUpdateCodeSignature": false,
       "publisherName": "drder"
 
     },
     "linux": {
+      "publish": ["github"],
       "category": "Network"
     }
   },
