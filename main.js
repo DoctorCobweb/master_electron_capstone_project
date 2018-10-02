@@ -9,7 +9,7 @@ const { app, ipcMain } = require('electron')
 const mainWindow = require('./mainWindow')
 const readItem = require('./readItem')
 
-require('electron-reload')(__dirname)
+// require('electron-reload')(__dirname)
 
 // listen for new read item
 ipcMain.on('new-item', (event, itemURL) => {

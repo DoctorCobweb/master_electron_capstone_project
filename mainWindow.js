@@ -12,14 +12,15 @@ exports.createWindow = () => {
     height: 650,
     minWidth: 350,
     minHeight: 310,
-    maxWidth: 650
+    maxWidth: 650,
+    icons: `${__dirname}/icons/64x64.png` // icon for linux
   })
 
   // and load the index.html of the app.
   this.win.loadURL(`file://${__dirname}/renderer/main.html`)
 
   // Open the DevTools.
-  this.win.webContents.openDevTools()
+  // this.win.webContents.openDevTools()
 
   // Emitted when the window is closed.
   this.win.on('closed', function () {
