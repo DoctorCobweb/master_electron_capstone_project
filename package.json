@@ -1,6 +1,6 @@
 {
   "name": "read-it",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "master electron course project",
   "main": "main.js",
   "scripts": {
@@ -8,7 +8,8 @@
     "mac": "electron-builder build -m",
     "win": "electron-builder build -w",
     "build": "electron-builder build -mwl",
-    "make-cert": "electron-builder create-self-signed-cert -p drder"
+    "make-cert": "electron-builder create-self-signed-cert -p drder",
+    "publish": "electron-builder build -mwl -p onTagOrDraft"
   },
   "build": {
     "appId": "com.trosky.andre.read-it",
@@ -16,22 +17,27 @@
       "buildResources": "."
     },
     "mac": {
-      "publish": ["github"],
+      "publish": [
+        "github"
+      ],
       "category": "public.app-category.productivity"
     },
     "win": {
-      "publish": ["github"],
+      "publish": [
+        "github"
+      ],
       "certificateFile": "private/read-it.p12",
       "verifyUpdateCodeSignature": false,
       "publisherName": "drder"
-
     },
     "linux": {
-      "publish": ["github"],
+      "publish": [
+        "github"
+      ],
       "category": "Network"
     }
   },
-  "repository": "https://github.com/electron/electron-quick-start",
+  "repository": "https://github.com/DoctorCobweb/master_electron_capstone_project",
   "keywords": [
     "Electron",
     "quick",
@@ -49,6 +55,8 @@
   },
   "dependencies": {
     "bulma": "0.3.1",
+    "electron-log": "^2.2.17",
+    "electron-updater": "^3.1.2",
     "font-awesome": "^4.7.0",
     "jquery": "^3.3.1",
     "query-string": "^6.1.0"
