@@ -58,7 +58,7 @@ module.exports.check = () => {
 
       // track download progress on autoUpdater
       autoUpdater.on('download-progress', (dl) => {
-        downloadProgresss = dl.percent
+        downloadProgress = dl.percent
         autoUpdater.logger.info(downloadProgress)
       })
 
